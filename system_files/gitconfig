@@ -1,138 +1,24 @@
 [user]
-    name = Kevin Kredit
-[alias]
-    # operations
-    co = checkout
-    rename = branch -m
-    ap = add -p
-    c = commit
-    cm = commit -m
-    ca = commit -a
-    cam = commit -am
-    amend = commit --amend --no-edit
-    reword = commit --amend
-    f = fetch
-    fp = fetch --prune
-    ft = fetch --prune origin "+refs/tags/*:refs/tags/*" # fetch and prune tags
-    p = pull
-    pl = pull
-    pu = push
-    cp = cherry-pick
-    rv = revert
-    rb = rebase
-    rbo = !BR=$(git rev-parse --abbrev-ref HEAD) && \
-           git rebase $(git config --get branch.$BR.remote)/$BR
-    rs = reset
-    rsh = reset --hard
-    s = show
-    st = status
-    br = branch
-    sm = submodule
-
-    # diff and log
-    d = diff
-    ds = diff --cached
-    dc = diff --cached
-    do = !BR=$(git rev-parse --abbrev-ref HEAD) && \
-          git diff $(git config --get branch.$BR.remote)/$BR
-    sns = show --compact-summary  # --name-status for old versions of git
-    dns = diff --compact-summary  # --name-status for old versions of git
-    lns = log --compact-summary  # --name-status for old versions of git
-    l = log
-    rl = log -n4
-    hist = log-compact --graph --decorate
-    h = log-compact --graph --decorate
-    re = log-compact --graph --decorate -8
-    today = log-compact --graph --decorate --since="4AM"
-    tree = log-compact --all --graph --decorate
-    t = log-compact --all --graph --decorate
-    rt = log-compact --all --graph --decorate -8
-    tree-simple = log-compact --all --graph --decorate --simplify-by-decoration
-    ts = log-compact --all --graph --decorate --simplify-by-decoration
-    lo = !BR=$(git rev-parse --abbrev-ref HEAD) && \
-          git log-compact --graph --decorate $(git config --get branch.$BR.remote)/$BR^...HEAD
-
-    # archiving
-    zip = !BRANCH="$(git rev-parse --abbrev-ref HEAD)" && \
-           REMOTE="$(git config --get branch.$BRANCH.remote)" && \
-           NAME="$(git config --get remote.$REMOTE.url | rev | cut -d/ -f1 | rev)" && \
-           git archive --format=zip $BRANCH > $NAME-$BRANCH.zip
-    tar = !BRANCH="$(git rev-parse --abbrev-ref HEAD)" && \
-           REMOTE="$(git config --get branch.$BRANCH.remote)" && \
-           NAME="$(git config --get remote.$REMOTE.url | rev | cut -d/ -f1 | rev)" && \
-           git archive $BRANCH | gzip > $NAME-$BRANCH.tar.gz
-
-    # handy
-    top = rev-parse --show-toplevel # See also git-extras 'git root'
-    first = rev-list --max-parents=0 HEAD
-    orphan = checkout --orphan orphan
-    ieee = config user.email k.kredit.us@ieee.org
-    ieeeg = config --global user.email k.kredit.us@ieee.org
-    hc = "!git config user.email kkredit@hashicorp.com && \
-           git config branch.master.pushRemote no_push && \
-           git config branch.main.pushRemote no_push && \
-           git config url.'git@github.com:'.insteadOf https:/github.com/ && \
-           git config submodule.recurse true"
-    patchify = format-patch -1
-    assume = update-index --assume-unchanged
-    unassume = update-index --no-assume-unchanged
-    assumed = !git ls-files -v | grep ^h | cut -c 3-
-    istracked = ls-files --error-unmatch
-    ignored = ls-files . --ignored --exclude-standard --others
-    read = !git show $1..HEAD --reverse
-    recover = "!git fsck --unreachable | grep commit | cut -d' ' -f3 | \
-                xargs git log --merges --no-walk --grep=WIP"
-    clonemy = !git clone https://github.com/kkredit/$1 && cd $1 && git ieee
-    clonehc = !git clone git@github.com:hashicorp/$1 && cd $1 && git hc
-    message = log --format=%B -n 1
-    whoami = "!echo $(git config user.name) -- $(git config user.email)"
-    hash = rev-parse HEAD
-    myrelease = "!git release -m \"$(printf \"Release $1\\n\\n\"; git changelog --tag $1 --no-merges -x)\""
-    lsd = diff --name-only
-    lss = diff --name-only --staged
-[core]
-    editor = vim
-    pager = diff-so-fancy | perl -pe 's/\t/»\\e[1D\t/g' | less --tabs=4 -RFX
-    excludesfile = ~/.gitignore_global
+	email = michael.spoehr@dornerworks.com
+	name = Michael Spoehr
 [pull]
     ff = only
-[rebase]
-    autoSquash = true
-[log-compact]
-    defaults = --two-initials --abbrev=8
-[github]
-    user = kkredit
-[credential]
-    helper = store
-[push]
-    default = simple
-[color]
-    ui = true
-[color "diff-highlight"]
-    oldNormal = red bold
-    oldHighlight = red bold 52
-    newNormal = green bold
-    newHighlight = green bold 22
+[core]
+    editor = vim
+    pager = diff-so-fancy | less --tabs=4 -RFX
+    excludesfile = ~/.gitignore_global
 [color "diff"]
-    meta = yellow
-    frag = magenta bold
-    commit = yellow bold
-    old = red bold
-    new = green bold
-    whitespace = red reverse
+	meta = 11
+	commit = yellow bold
+[github]
+    user = mspoehr
+[diff-so-fancy]
+    markEmptyLines = false
 [alias]
-    # functions
-    alias = "!f() { \
-                  git config --get-regexp alias | grep -i \"alias.$1\\s\" | \
-                      sed \"s/alias.$1 /$1 = /g\" | sed -E 's/ ( ){4,}/\\n&/g' | \
-                      sed 's/;\\n/\\n/g'; \
-              }; f"
-
-    showbr = "!f() { \
-                  EXT=${2##*.}; \
-                  git show $1:$2 | bat -l $EXT --file-name $1:$2; \
-              }; f"
-
+    amend = commit --amend --no-edit
+    reword = commit --amend
+    fp = fetch --all --prune
+    unstage = restore --staged
     newpush = "!f() { \
                     REMOTE=origin; \
                     if [ $# -eq 1 ]; then \
@@ -140,92 +26,3 @@
                     fi; \
                     git push --set-upstream $REMOTE $(git rev-parse --abbrev-ref HEAD); \
                 }; f"
-
-    url = "!f() { \
-                if [ $# -gt 0 ]; then \
-                    REMOTES=\"$@\"; \
-                else \
-                    REMOTES=\"$(git remote show -n)\"; \
-                fi; \
-                CUR_BR=$(git rev-parse --abbrev-ref HEAD); \
-                CUR_REM=$(git config --get branch.$CUR_BR.remote); \
-                for REMOTE in $REMOTES; do \
-                    if [ \"$CUR_REM\" = \"$REMOTE\" ]; then \
-                        echo -en \"\\e[1;32m${REMOTE}\\e[0m\"; \
-                        echo -e \"  (default for \\e[4m$CUR_BR\\e[0m)\"; \
-                    else \
-                        echo $REMOTE; \
-                    fi; \
-                    git remote show -n $REMOTE | grep URL; \
-                done \
-            }; f"
-
-    submodule-setup = "!f() { \
-                           git submodule init; \
-                           git submodule update --init --force --remote; \
-                       }; f"
-
-    submodule-rm = "!f() { \
-                        SM=\"$(echo $1 | sed s,/*$,,)\"; \
-                        git rm --cached $SM; \
-                        yes | rm -r $SM; \
-                        yes | rm -r .git/modules/$SM; \
-                        git config -f .gitmodules --remove-section submodule.$SM; \
-                        git config -f .git/config --remove-section submodule.$SM; \
-                        git add .gitmodules; \
-                    }; f"
-
-    bump = "!f() { \
-                SUBMODULES=$(git config --file .gitmodules --name-only --get-regexp path); \
-                for SM in $SUBMODULES; do \
-                    SMNAME=$(echo $SM | cut -d. -f2); \
-                    SMPATH=$(git config --file .gitmodules --get-regexp path | grep $SMNAME | \
-                             awk '{ print $2 }'); \
-                    if [ -n \"$(git diff -- $SMPATH)\" ]; then \
-                        echo Bumping submodule $SMNAME at path $SMPATH; \
-                        git add $SMPATH; \
-                        git commit -m \"Bump submodule $SMNAME\"; \
-                    fi; \
-                done; \
-            }; f"
-
-    brun = "!f() { \
-                READ_BR=$1; \
-                CMD=$2; \
-                COMPARE_BR=HEAD; \
-                if [ $# -gt 2 ]; then \
-                    COMPARE_BR=$3; \
-                fi; \
-                LAST_COMMON=$(git merge-base $READ_BR $COMPARE_BR); \
-                case \"$CMD\" in \
-                    \"lns\") git lns $LAST_COMMON..$READ_BR;; \
-                    \"sns\") git sns $LAST_COMMON..$READ_BR;; \
-                    \"read\") git show $LAST_COMMON..$READ_BR --reverse;; \
-                    *) echo Invalid command option: $CMD;; \
-                esac; \
-            }; f"
-
-    onto = "!f() { \
-                if [[ $# != 1 ]]; then \
-                    echo 'Usage: git onto <target-branch>'; \
-                    return 1; \
-                fi; \
-                CURRENT_BRANCH=\"$(git rev-parse --abbrev-ref HEAD)\"; \
-                if [[ \"\" == \"$CURRENT_BRANCH\" ]]; then \
-                    echo 'Usage: git onto <target-branch>'; \
-                    echo 'This command must be called while on a branch'; \
-                    return 1; \
-                fi; \
-                TARGET=$1; \
-                TARGET_MESSAGE=\"$(git log --format=%B -n 1 $TARGET)\"; \
-                for REV in $(git rev-list $(git merge-base HEAD $TARGET)~1..HEAD); do \
-                    MESSAGE=\"$(git log --format=%B -n 1 $REV)\"; \
-                    if [[ \"$MESSAGE\" == \"$TARGET_MESSAGE\" ]]; then \
-                        echo \"Matching commit message found in rev $REV\"; \
-                        git rebase --onto $TARGET $REV $CURRENT_BRANCH; \
-                        return 0; \
-                    fi; \
-                done; \
-                echo 'Error: matching commit message not found'; \
-                return 1; \
-            }; f"

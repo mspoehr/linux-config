@@ -1,236 +1,109 @@
-" Plugins
-
-call plug#begin('~/.vim/plugged')
-
-" Formatting and colorschemes
-Plug 'tomasiser/vim-code-dark'
-"Plug 'sonph/onehalf', { 'rtp': 'vim' }
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'blueyed/vim-diminactive'
-
-" Functionality
-Plug 'machakann/vim-highlightedyank'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'easymotion/vim-easymotion'
-Plug 'tpope/vim-surround'
-Plug 'preservim/nerdtree'
-Plug 'preservim/nerdcommenter'
-Plug 'mattn/vim-goimports'
-
-" Neovim only
-if has('nvim')
-  Plug 'nvim-treesitter/nvim-treesitter', {'branch': '0.5-compat', 'do': ':TSUpdate'}
-  Plug 'rmagatti/auto-session'
-  Plug 'Th3Whit3Wolf/one-nvim'
-  Plug 'neovim/nvim-lspconfig'
-  Plug 'hrsh7th/nvim-compe'
-  Plug 'kabouzeid/nvim-lspinstall'
-  Plug 'f-person/git-blame.nvim'
-  Plug 'folke/which-key.nvim'
-
-  Plug 'nvim-lua/plenary.nvim'
-  Plug 'lewis6991/gitsigns.nvim'
-  Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': ':CocInstall coc-spell-checker' }
-endif
-
-call plug#end()
-
-" Plugin configuration
-let g:highlightedyank_highlight_duration = 150
-let g:fzf_layout = { 'down': '30%' }
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_statusline_ontop = 1
-let g:airline_detect_spell = 0
-let g:gitblame_enabled = 0
-let g:auto_session_pre_save_cmds = ["tabdo NERDTreeClose"]
-" Close the tab if NERDTree is the only window remaining in it.
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-" Fzf -- Rg command with preview window
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
-" Completion (nvim-compe)
-let g:compe = {}
-let g:compe.enabled = v:true
-let g:compe.autocomplete = v:true
-let g:compe.source = {}
-let g:compe.source.path = v:true
-let g:compe.source.buffer = v:true
-let g:compe.source.calc = v:true
-let g:compe.source.nvim_lsp = v:true
-let g:compe.source.treesitter = v:true
-
-
-" Keymappings
-let mapleader = " "
-let timeoutlen = 500
-
-nnoremap <silent> <leader>w :w<CR>
-nnoremap <leader>W :wq<CR>
-nnoremap <silent> <leader>q :q<CR>
-nnoremap <silent> <leader>1 :source $MYVIMRC<CR>
-nnoremap <C-p> :<C-u>FZF<CR>
-nnoremap <leader>; :History:<CR>
-inoremap jk <esc>
-nnoremap <silent> <leader>d :NERDTreeFind<CR>
-nnoremap <silent> <leader>/ :NERDTreeToggle<CR>
-nnoremap <silent> <leader>, :noh<CR>:cclose<CR>:lclose<CR>
-nnoremap <leader>z za<CR>
-nnoremap <leader>y "+y
-nnoremap <leader>p "+p
-nnoremap <leader>i i_<Esc>r
-nnoremap <leader>. :let @+=expand('%')<CR>
-nnoremap <leader>> :let @+=expand('%:p')<CR>
-nnoremap <silent> <leader>b :GitBlameToggle<CR>
-nnoremap <leader>g :Rg<CR>
-nnoremap <leader>G :Rg <C-R><C-W><CR>
-nnoremap <leader>s :w<CR>:!
-nnoremap <leader>rw ciw<C-R>0<ESC>
-vnoremap <leader>a :CocAction<CR>
-nnoremap <leader>a :CocAction<CR>
+" Configuration
 
 " Colors
-syntax on
-set t_Co=256
-set t_ut=
-"let g:airline_theme = 'codedark'
-"let g:airline_theme = 'onehalfdark'
-let g:airline_theme = 'jellybeans'
-"colorscheme codedark
-if has('nvim')
-  "colorscheme one-nvim
-  "^^ broken? ...
-  colorscheme codedark
-  hi ColorColumn ctermbg=0 guibg=#333333
-else
-  colorscheme codedark
-  hi ColorColumn ctermbg=0 guibg=#333333
-endif
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
+colors badwolf
 
-" Indentation & tabs
-set backspace=indent,eol,start
-set autoindent
-set smartindent
-set tabstop=2
-set shiftwidth=2
+" Basic Settings
+
+filetype plugin indent on
+syntax on
+set nocompatible
+set modelines=0
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set expandtab
 set smarttab
-autocmd FileType make setlocal noexpandtab
-autocmd FileType go setlocal noexpandtab
-set foldlevel=999
-
-" Display & format
-set cursorline
-set number
-set relativenumber
-autocmd InsertEnter * :set norelativenumber
-autocmd InsertLeave * :set relativenumber
-"set textwidth=100
-set wrapmargin=2
-set showmatch
-"if exists('+colorcolumn')
-"  set colorcolumn=101
-"else
-"  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
-"endif
-
-" Splits and windows
-set splitbelow
-set splitright
-"nnoremap <C-J> <C-W><C-J>
-"nnoremap <C-K> <C-W><C-K>
-"nnoremap <C-L> <C-W><C-L>
-"nnoremap <C-H> <C-W><C-H>
-nnoremap J :5winc +<CR>
-nnoremap K :5winc -<CR>
-nnoremap L :5winc ><CR>
-nnoremap H :5winc <<CR>
-" jump to previous window
-nnoremap <silent> <leader><BS> <C-W>p
-" close vim if a QFL is the only remaining window
-" see https://stackoverflow.com/a/7477056
-aug QFClose
-  au!
-  au WinEnter * if winnr('$') == 1 && &buftype == "quickfix"|q|endif
-aug END
-
-" Golang settings
-autocmd Filetype go call SetGolangOptions()
-function SetGolangOptions()
-  :nnoremap <leader>t :w<CR>:!go fmt %<CR><CR>
-endfunction
-
-" Git commit settings
-autocmd Filetype gitcommit call SetGitcommitOptions()
-function SetGitcommitOptions()
-  set textwidth=72
-  set colorcolumn=73
-  set colorcolumn+=51
-  $
-  read !echo '\# Recent commits:'; git log --oneline --no-decorate -8 | sed -e 's/^/\# /g'
-  1
-  startinsert
-endfunction
-
-" Git rebase settings
-autocmd Filetype gitrebase call SetGitrebaseOptions()
-function SetGitrebaseOptions()
-  call setreg('p', "0dt ipick\<esc>j0")
-  call setreg('r', "0dt ireword\<esc>j0")
-  call setreg('e', "0dt iedit\<esc>j0")
-  call setreg('s', "0dt isquash\<esc>j0")
-  call setreg('f', "0dt ifixup\<esc>j0")
-endfunction
-
-" Search
-set hlsearch
-set incsearch
+set encoding=utf-8
+set scrolloff=5
+set autoindent
+set smartindent
+set showmode
+set showcmd
+set hidden
+set wildmenu
+set wildmode=list:longest
+set ttyfast
+set ruler
+set backspace=indent,eol,start
+set laststatus=2
+set noundofile
+" nnoremap / /\v " magic mode
+" vnoremap / /\v " magic mode
 set ignorecase
 set smartcase
+set incsearch
+set showmatch
+set hlsearch
+nnoremap <leader><space> :noh<cr>
+nnoremap <tab> %
+vnoremap <tab> %
+set wrap
+set linebreak
+set nolist
+set formatoptions=qrn1
+set spell spelllang=en_us
+hi clear SpellBad
+hi SpellBad cterm=underline
 
-" Browse and scroll
-set scrolloff=5
-set laststatus=2
-" Prevent Vim from clobbering the scrollback buffer. See
-" http://www.shallowsky.com/linux/noaltscreen.html
-set t_ti= t_te=
+" Display & format
+set number
 
-" Open at same line as was last opened
-autocmd BufReadPost * if &filetype !~ 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g'\"" | endif
+" Aesthetics
 
-"" Spell
-"set spell spelllang=en_us
-"hi clear SpellBad
-"hi SpellBad cterm=underline
-"hi clear SpellCap
-"hi clear SpellLocal
-"hi clear SpellRare
+" Highlight whitespace at ends of lines
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
-"" Highlight whitespace at ends of lines
-"highlight ExtraWhitespace ctermbg=red guibg=red
-"match ExtraWhitespace /\s\+$/
-"autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-"autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-"autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-"autocmd BufWinLeave * call clearmatches()
-"" Remove trailing whitespace except in markdown files
-let exceptlist = ['markdown']
-autocmd BufWritePre * if index(exceptlist, &ft) < 0 | :%s/\s\+$//e
+" Mappings and shortcuts
 
-" Miscellaneous
-set undofile
-set autoread
+" Basics
 
+inoremap jk <ESC>
+let mapleader = ","
+
+
+au FocusLost * :wa
+vnoremap . :norm.<CR>
+
+" Leader shortcuts
+
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+nnoremap <leader>a :Ack
+nnoremap <leader>ft Vatzf
+nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
+nnoremap <leader>q gqip
+nnoremap <leader>v V`]
+nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <leader>j VipJ
+nnoremap <leader>q gqip
+nnoremap <leader>f 1z=
+nnoremap <leader>s ]s
+nnoremap <leader>u :!git pull website master && git commit -am 'Standard commit.' && git push website master<CR><CR>
+nnoremap <leader>p :!git commit -am 'Standard commit.' && git push origin master<CR><CR>
+nnoremap <leader>d :read !date<CR>
+nnoremap <leader>r :!!<CR>
+nnoremap <leader>m :normal @a
+nnoremap <leader>l :CtrlP<CR>
+nnoremap <leader>nt :NERDTree<CR>
+nnoremap <leader>s :set spell!<CR>
+nnoremap <leader>n :set nonumber!<CR>
+nnoremap <leader>rn :set norelativenumber!<CR>
+nnoremap <leader>c :nohl<CR>
+nnoremap <leader>pa :set nopaste!<CR>
+nnoremap <leader>rc :so $MYVIMRC<CR>
+nnoremap <leader>b :BlogSave publish<CR>
+"nnoremap <leader>r :! /Users/daniel/Documents/whup.sh<CR><CR>
+nnoremap <leader>h :set ft=HTML<CR><CR>
+
+" Control shortcuts
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
