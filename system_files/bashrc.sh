@@ -72,3 +72,7 @@ export EDITOR=vim
 
 # use bat to page man files, if it is installed:
 which bat &>/dev/null && export MANPAGER="sh -c 'col -bx | bat -l man -p'" || true
+
+# ensure that SSH key is added to the agent
+ssh-add -L | grep -q ".ssh/id_rsa" || ssh-add ~/.ssh/id_rsa
+
