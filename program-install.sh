@@ -35,7 +35,8 @@ if has_arg "basic"; then
             ncdu \
             shellcheck \
             starship \
-            ripgrep
+            ripgrep \
+            exa
         brew install --cask iterm2 amethyst
         curl -L https://iterm2.com/shell_integration/bash -o ~/.iterm2_shell_integration.bash
         exec bash

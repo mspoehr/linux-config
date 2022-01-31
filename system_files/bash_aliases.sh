@@ -6,9 +6,9 @@ if $MAC; then
   alias zcat='gzcat'
 fi
 
-alias ls='ls -GFh'
-alias ll='ls -al'
-alias l='ls -CF'
+alias ls='exa -F'
+alias ll='exa --git -alFh'
+alias l='exa -F'
 alias cat='bat --plain'
 alias g='git'
 alias nano='vim'
