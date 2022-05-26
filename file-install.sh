@@ -19,7 +19,7 @@ install -m 644 $FILES_DIR/starship.toml ~/.config/starship.toml
 ! $MAC || touch ~/.hushlogin
 install -m 644 $FILES_DIR/dircolors.sh ~/.dircolors
 install -m 644 $FILES_DIR/vimrc ~/.vimrc
-install -m 644 $FILES_DIR/badwolf.vim ~/.vim/colors
+install -m 644 $FILES_DIR/badwolf.vim ~/.vim/colors/badwolf.vim
 install -m 644 $FILES_DIR/gitconfig ~/.gitconfig
 install -m 644 $FILES_DIR/gitignore_global ~/.gitignore_global
 install -m 644 $FILES_DIR/ripgreprc ~/.ripgreprc
