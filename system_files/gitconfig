@@ -19,6 +19,7 @@
     reword = commit --amend
     fp = fetch --all --prune
     unstage = restore --staged
+    fpush = push --force-with-lease
     newpush = "!f() { \
                     REMOTE=origin; \
                     if [ $# -eq 1 ]; then \
