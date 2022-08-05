@@ -17,6 +17,36 @@ if has_arg "update"; then
     $WSL || sudo snap refresh
 fi
 
+if has_arg "shell"; then
+    install-package \
+        bash \
+        bash-completion \
+        vim \
+        git \
+        diff-so-fancy \
+        autojump \
+        bat \
+        starship \
+        ripgrep \
+        fd \
+        exa \
+        fzf
+
+    if $MAC; then
+        brew install \
+            coreutils \
+            gnu-sed \
+            gnu-tar \
+            gnupg \
+            grep
+
+
+        curl -L https://iterm2.com/shell_integration/bash -o ~/.iterm2_shell_integration.bash
+        exec bash
+        echo $(brew --prefix)/bin/bash | sudo tee -a /private/etc/shells
+        sudo chpass -s $(brew --prefix)/bin/bash $(whoami)
+    fi
+fi
 # Basic tools
 if has_arg "basic"; then
     if $MAC; then
