@@ -1,21 +1,22 @@
-
 # Linux-config
 
 ## Purpose
 
-This is a collection of scripts and config files that keep my Linux environment portable and in
-sync. It is mostly Ubuntu-oriented.
+This is a collection of scripts and config files that keep my Linux/macOS environment portable and in
+sync. It is mostly macOS-oriented, but should also work in Linux.
+
+Originally forked from https://github.com/kkredit/linux-config. Go check out Kevin's set up, it's probably better than mine!
 
 ## Usage
 
 To install config files to appropriate locations on the filesystem, run
 
 ```sh
-./file-install.sh [update] [submodules]
+./file-install.sh [update]
 ```
 
-`update` installs some programs from the web, and `submodules` option initializes or updates the
-submodules. Nothing in this script requires root privileges.
+Note that many config files assume that various non-standard programs are installed on the system,
+which can be installed via `./file-install shell`.
 
 To install programs, run
 
@@ -31,12 +32,8 @@ requires root privileges.
 ## File Structure
 
 - `helper_scripts/`: helper bash functions used within this repo
-- `reference/`: handy template files, like a Makefile templates, a static IP interfaces template,
-  etc.
-- `submodules/`: cloned submodules
 - `system_files/`: config files that get placed around the filesystem, like `.bashrc`, `.vimrc`,
   etc.
-- `wsl/`: scripts and files that make sense only in the WSL environment
 
 ## Sharing
 
