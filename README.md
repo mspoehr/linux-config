@@ -16,7 +16,7 @@ To install config files to appropriate locations on the filesystem, run
 ```
 
 Note that many config files assume that various non-standard programs are installed on the system,
-which can be installed via `./file-install shell`.
+which can be installed via `./program-install.sh shell`.
 
 To install programs, run
 
