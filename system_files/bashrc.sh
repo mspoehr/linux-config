@@ -49,19 +49,20 @@ function sourceIfPresent() {
 
 sourceIfPresent ~/.bash_aliases
 sourceIfPresent /usr/share/bash-completion/completions/git
-sourceIfPresent /usr/local/etc/bash_completion
+sourceIfPresent $(brew --prefix)/etc/bash_completion
 sourceIfPresent /etc/bash_completion
 sourceIfPresent ~/.bash_functions
 sourceIfPresent ~/.bash_variables
 sourceIfPresent ~/.brew_profile
 sourceIfPresent ~/.fzf.bash
-sourceIfPresent /usr/local/etc/profile.d/autojump.sh
+sourceIfPresent $(brew --prefix)/etc/profile.d/autojump.sh
 
 # Load starship after sourcing files above, otherwise there'll be issues with cmd_duration
 sourceIfPresent ~/.bash_prompt
 
 # Load bash_completion (installed via brew), for git autocompletion
-[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+[[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && . "$(brew --prefix)/etc/profile.d/bash_completion.sh" # TODO: remove
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 __git_complete g git
 
 # Set environment variables

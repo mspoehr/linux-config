@@ -47,6 +47,12 @@ if has_arg "shell"; then
         sudo chpass -s $(brew --prefix)/bin/bash $(whoami)
     fi
 fi
+
+if has_arg "my-dev"; then
+    install-package \
+        shellcheck
+fi
+
 # Basic tools
 if has_arg "basic"; then
     if $MAC; then
@@ -271,19 +277,22 @@ if has_arg "bash"; then
 fi
 
 if has_arg "rvm"; then
-    sudo-pkg-mgr install -y \
-        software-properties-common
+    # sudo-pkg-mgr install -y \
+    #     software-properties-common
 
-    sudo apt-add-repository -y ppa:rael-gc/rvm
-    sudo-pkg-mgr update
-    sudo-pkg-mgr install -y \
-        rvm
+    # sudo apt-add-repository -y ppa:rael-gc/rvm
+    # sudo-pkg-mgr update
+    # sudo-pkg-mgr install -y \
+    #     rvm
 
-    sudo usermod -a -G rvm "$USER"
-    echo
-    echo "Set 'Terminal preferences > Command' to run as a login shell"
-    echo "Reboot before you use RVM"
-    echo
+    # sudo usermod -a -G rvm "$USER"
+    # echo
+    # echo "Set 'Terminal preferences > Command' to run as a login shell"
+    # echo "Reboot before you use RVM"
+    # echo
+    gpg --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+    curl -sSL https://get.rvm.io | bash -s stable
+    source /Users/michaelspoehr/.rvm/scripts/rvm
 fi
 
 if has_arg "ruby"; then
@@ -519,25 +528,6 @@ if has_arg "wireshark"; then
     fi
 fi
 
-if has_arg "enpass"; then
-    # Enpass
-    echo "deb http://repo.sinew.in/ stable main" | \
-        sudo tee /etc/apt/sources.list.d/enpass.list > /dev/null
-    wget -O - https://dl.sinew.in/keys/enpass-linux.key | sudo apt-key add -
-    sudo-pkg-mgr update
-    sudo-pkg-mgr install -y enpass
-    xdg-open https://www.enpass.io/downloads/#extensions
-    echo "NOTICE: Install the Firefox extension from the browser."
-fi
-
-if has_arg "signal"; then
-    # Signal
-    curl -s https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
-    echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" | \
-        sudo tee -a /etc/apt/sources.list.d/signal-xenial.list > /dev/null
-    sudo-pkg-mgr update && sudo-pkg-mgr install signal-desktop
-fi
-
 if has_arg "sonarqube"; then
     sudo mkdir -p /opt/sonarqube
     sudo chown "$USER":"$USER" -R /opt/sonarqube
@@ -575,27 +565,18 @@ if has_arg "chrome"; then
     sudo-pkg-mgr install google-chrome-stable
 fi
 
-if has_arg "glow"; then
-    URL="https://github.com$(curl -s https://github.com/charmbracelet/glow/releases | \
-           grep linux_amd64.deb | head -1 | cut -d\" -f2)"
-    wget -q --show-progress "$URL"
-    FILE=$(ls glow_*_linux_amd64.deb)
-    if [[ "" == "$FILE" ]]; then
-        echo "Glow package download failed; update URL determination command"
-        echo "URL: $URL"
-        exit 1
-    fi
-    sudo dpkg -i "$FILE"
-    rm "$FILE"
+if has_arg "awscli"; then
+    curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+    sudo installer -pkg ./AWSCLIV2.pkg -target /
+    which aws
+    aws --version
 fi
 
-if has_arg "awscli"; then
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    unzip awscliv2.zip
-    UPDATE=$(which aws &>/dev/null && echo '--update' || echo '')
-    sudo ./aws/install "$UPDATE"
-    aws --version
-    rm -r awscliv2.zip aws
+if has_arg "java-dev"; then
+    brew install openjdk@17
+    sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk
+
+    brew install gradle
 fi
 
 if has_arg "awseb" || has_arg "elastic_beanstalk"; then
