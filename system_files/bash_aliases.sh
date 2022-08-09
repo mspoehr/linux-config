@@ -13,3 +13,5 @@ alias cat='bat --plain'
 alias g='git'
 alias nano='vim'
 alias t='rvm 2.7.3 do hours'
+
+which fdfind &>/dev/null && alias fd='fdfind'
