@@ -26,4 +26,5 @@ install -m 644 $FILES_DIR/gitconfig ~/.gitconfig
 install -m 644 $FILES_DIR/gitignore_global ~/.gitignore_global
 install -m 644 $FILES_DIR/ripgreprc ~/.ripgreprc
 install -m 644 $FILES_DIR/com.googlecode.iterm2.plist ~/.config/com.googlecode.iterm2.plist
-
+mkdir -p ~/Library/KeyBindings
+install -m 644 $FILES_DIR/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
