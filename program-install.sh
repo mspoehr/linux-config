@@ -56,6 +56,7 @@ if has_arg "shell"; then
 fi
 
 if has_arg "macos-gui"; then
+    brew tap homebrew/cask-drivers
     brew install --cask \
         amethyst \
         brave-browser \
@@ -63,16 +64,27 @@ if has_arg "macos-gui"; then
         itsycal \
         raycast \
         scroll-reverser \
-        visual-studio-code
+        visual-studio-code \
+        zsa-wally
 fi
 
 if has_arg "dev"; then
     brew install \
-        shellcheck
+        shellcheck \
+        jq
 
     if $MAC; then
         brew install --cask \
-            postman \
             visual-studio-code
     fi
+fi
+
+if has_arg "webdev"; then
+    brew install --cask \
+        firefox \
+        google-chrome \
+        postman \
+        sf-symbols
+
+    # TODO: is there a way to install colorslurp via brew?
 fi
