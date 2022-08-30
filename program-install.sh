@@ -88,3 +88,34 @@ if has_arg "webdev"; then
 
     # TODO: is there a way to install colorslurp via brew?
 fi
+
+if has_arg "rvm"; then
+    gpg --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+    curl -sSL https://get.rvm.io | bash -s stable
+    source /Users/michaelspoehr/.rvm/scripts/rvm
+fi
+
+if has_arg "awscli"; then
+    curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+    sudo installer -pkg ./AWSCLIV2.pkg -target /
+    which aws
+    aws --version
+fi
+
+if has_arg "java-dev"; then
+    brew install openjdk@17
+    sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk
+
+    brew install gradle
+fi
+
+if has_arg "ebcli"; then
+  if [[ ! $(which python3) ]]; then
+    brew install python3
+  fi
+
+  pip3 install --user virtualenv
+  git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git
+  python3 ./aws-elastic-beanstalk-cli-setup/scripts/ebcli_installer.py
+  rm -rf aws-elastic-beanstalk-cli-setup
+fi
