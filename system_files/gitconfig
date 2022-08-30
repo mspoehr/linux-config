@@ -20,6 +20,7 @@
     fp = fetch --all --prune
     unstage = restore --staged
     fpush = push --force-with-lease
+    rpull = pull --rebase
     newpush = "!f() { \
                     REMOTE=origin; \
                     if [ $# -eq 1 ]; then \
