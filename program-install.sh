@@ -43,13 +43,13 @@ if has_arg "shell"; then
             gnu-sed \
             gnu-tar \
             gnupg \
-            grep 
+            grep
 
         brew tap homebrew/cask-fonts
         brew install --cask font-fira-code-nerd-font
 
         curl -L https://iterm2.com/shell_integration/bash -o ~/.iterm2_shell_integration.bash
-        exec bash
+        # exec bash # this used to work, but now it doesn't...
         echo $(brew --prefix)/bin/bash | sudo tee -a /private/etc/shells
         sudo chpass -s $(brew --prefix)/bin/bash $(whoami)
     fi
