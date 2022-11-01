@@ -85,4 +85,4 @@ if [ "$?" == 2 ]; then
 fi
 
 # ensure that SSH key is added to the agent
-ssh-add -L | grep -q ".ssh/id_rsa" || ssh-add ~/.ssh/id_rsa
+ssh-add -L | grep -q "$(cat .ssh/id_rsa.pub)" || ssh-add ~/.ssh/id_rsa
