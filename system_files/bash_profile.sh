@@ -1,8 +1,8 @@
 # shellcheck disable=SC2148,1090
 # ~/.bash_profile
 
-source ~/.profile
 source ~/.bashrc
+source ~/.profile
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
