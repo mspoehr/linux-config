@@ -62,3 +62,11 @@ retry() {
     return $cmd_exit_code
 }
 
+function awsprofile() {
+    if aws configure list-profiles | grep -q "$1"; then
+        export AWS_PROFILE="$1"
+    else
+        echo "\"$1\" is not a configured AWS profile."
+        return 1
+    fi
+}
