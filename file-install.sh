@@ -28,3 +28,14 @@ install -m 644 $FILES_DIR/ripgreprc ~/.ripgreprc
 install -m 644 $FILES_DIR/com.googlecode.iterm2.plist ~/.config/com.googlecode.iterm2.plist
 mkdir -p ~/Library/KeyBindings
 install -m 644 $FILES_DIR/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
+
+# Configure git email, as this may vary per system:
+if [ -s ~/.gitemail ]; then
+    gitemail=$(cat ~/.gitemail)
+else
+    echo -n "Enter the default email for git commits on this system: "
+    read gitemail
+    echo "$gitemail" > ~/.gitemail
+fi
+
+git config --global user.email "$gitemail"
