@@ -68,6 +68,9 @@ sourceIfPresent ~/.bash_prompt
 # Load bash_completion (installed via brew on macos), for git autocompletion
 __git_complete g git
 
+# Load AWS bash completion
+which aws &>/dev/null && complete -C '/usr/local/bin/aws_completer' aws
+
 # Set environment variables
 PATH=$PATH:~/bin
 export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(vim {})+abort'" # ctrl-o opens file in vim
