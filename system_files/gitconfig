@@ -6,6 +6,8 @@
     editor = vim
     pager = diff-so-fancy | less --tabs=4 -RFX
     excludesfile = ~/.gitignore_global
+[init]
+    defaultBranch = main
 [color "diff"]
 	meta = 11
 	commit = yellow bold
