@@ -65,11 +65,14 @@ fi
 # Load starship after sourcing files above, otherwise there'll be issues with cmd_duration
 sourceIfPresent ~/.bash_prompt
 
-# Load bash_completion (installed via brew on macos), for git autocompletion
-__git_complete g git
+function ifInstalled() {
+    which "$1" &>/dev/null
+}
 
-# Load AWS bash completion
-which aws &>/dev/null && complete -C '/usr/local/bin/aws_completer' aws
+# Setup autocompletion
+__git_complete g git
+ifInstalled aws && complete -C '/usr/local/bin/aws_completer' aws
+ifInstalled terraform && complete -C '/usr/local/bin/terraform' terraform
 
 # Set environment variables
 PATH=$PATH:~/bin
@@ -78,7 +81,7 @@ export RIPGREP_CONFIG_PATH=~/.ripgreprc
 export EDITOR=vim
 
 # use bat to page man files, if it is installed:
-which bat &>/dev/null && export MANPAGER="sh -c 'col -bx | bat -l man -p'" || true
+ifInstalled bat && export MANPAGER="sh -c 'col -bx | bat -l man -p'" || true
 
 # Ensure that the SSH agent is running
 ssh-add -L &>/dev/null
