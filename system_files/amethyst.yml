@@ -1,0 +1,35 @@
+# Use tall and fullscreen layouts
+layouts:
+  - tall
+  - fullscreen
+  # - tall-right
+  - wide
+  # - two-pane
+  # - 3column-left
+  # - middle-wide
+  # - 3column-right
+  # - 4column-left
+  # - 4column-right
+  - column
+  # - row
+  # - floating
+  # - widescreen-tall
+  # - widescreen-tall-right
+  # - bsp
+
+# Add "command" to the default mods
+mod1:
+  - option
+  - shift
+  - command
+mod2:
+  - option
+  - shift
+  - control
+  - command
+
+floating:
+  - com.1password.1password
+  - com.microsoft.Outlook
+  - com.apple.finder
+  - com.apple.calculator

@@ -47,6 +47,7 @@ $cmd $FILES_DIR/ripgreprc ~/.ripgreprc
 $cmd $FILES_DIR/com.googlecode.iterm2.plist ~/.config/com.googlecode.iterm2.plist
 mkdir -p ~/Library/KeyBindings
 $cmd $FILES_DIR/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
+$cmd $FILES_DIR/amethyst.yml ~/.amethyst.yml
 
 # Configure git email, as this may vary per system:
 if [ -s ~/.gitemail ]; then
