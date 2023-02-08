@@ -63,7 +63,7 @@ retry() {
 }
 
 function awsprofile() {
-    if aws configure list-profiles | grep -q "$1"; then
+    if aws configure list-profiles | grep -qw "$1"; then
         export AWS_PROFILE="$1"
     else
         echo "\"$1\" is not a configured AWS profile."
