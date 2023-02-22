@@ -144,6 +144,8 @@
 	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
+	<key>Mark Alert Action</key>
+	<string>Post Notification</string>
 	<key>NeverWarnAboutShortLivedSessions_5D61AED8-65C3-404A-A347-603F2CB846AC</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_5D61AED8-65C3-404A-A347-603F2CB846AC_selection</key>
@@ -810,6 +812,8 @@
 			<false/>
 			<key>Shortcut</key>
 			<string></string>
+			<key>Show Mark Indicators</key>
+			<false/>
 			<key>Show Status Bar</key>
 			<true/>
 			<key>Silence Bell</key>
