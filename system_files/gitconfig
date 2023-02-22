@@ -1,5 +1,5 @@
 [user]
-	name = Michael Spoehr
+    name = Michael Spoehr
 [pull]
     ff = only
 [core]
@@ -9,8 +9,8 @@
 [init]
     defaultBranch = main
 [color "diff"]
-	meta = 11
-	commit = yellow bold
+    meta = 11
+    commit = yellow bold
 [github]
     user = mspoehr
 [diff-so-fancy]
