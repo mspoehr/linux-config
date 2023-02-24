@@ -56,6 +56,7 @@ if $MAC; then
     sourceIfPresent ~/.brew_profile
     sourceIfPresent $(brew --prefix)/etc/bash_completion
     sourceIfPresent $(brew --prefix)/etc/profile.d/autojump.sh
+    sourceIfPresent ~/.iterm2_shell_integration.bash
 else
     sourceIfPresent /etc/profile.d/bash_completion.sh
     sourceIfPresent /usr/share/bash-completion/completions/git
