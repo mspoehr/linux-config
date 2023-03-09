@@ -70,3 +70,7 @@ function awsprofile() {
         return 1
     fi
 }
+
+function git-exclude-local() {
+    grep "$1" .git/info/exclude || echo "$1" >> .git/info/exclude
+}
