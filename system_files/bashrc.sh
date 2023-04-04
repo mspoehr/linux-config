@@ -81,6 +81,11 @@ export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(vim {})+abort'" # ctrl-o opens f
 export RIPGREP_CONFIG_PATH=~/.ripgreprc
 export EDITOR=vim
 
+# Make macOS stop complaining about bash
+if $MAC; then
+   export BASH_SILENCE_DEPRECATION_WARNING=1
+fi
+
 # use bat to page man files, if it is installed:
 ifInstalled bat && export MANPAGER="sh -c 'col -bx | bat -l man -p'" || true
 
@@ -93,3 +98,5 @@ fi
 
 # ensure that SSH key is added to the agent
 ssh-add -L | grep -q "$(cat ~/.ssh/id_rsa.pub)" || ssh-add ~/.ssh/id_rsa
+
+
