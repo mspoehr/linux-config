@@ -65,6 +65,9 @@ retry() {
 function awsprofile() {
     if aws configure list-profiles | grep -qw "$1"; then
         export AWS_PROFILE="$1"
+        unset AWS_ACCESS_KEY_ID
+        unset AWS_SECRET_ACCESS_KEY
+        unset AWS_SESSION_TOKEN
     else
         echo "\"$1\" is not a configured AWS profile."
         return 1
