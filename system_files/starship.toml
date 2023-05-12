@@ -60,3 +60,9 @@ untracked = "[…${count}](purple)"
 
 [aws]
 style = "bold #ff9900"
+
+[custom.midway]
+description = "checks if midway credentials have expired"
+when = "ls ~/mwinit-test.sh"
+command = "~/mwinit-test.sh"
+style = "bold red"
