@@ -5,9 +5,9 @@ if $MAC; then
   alias zcat='gzcat'
 fi
 
-alias ls='exa -F'
-alias ll='exa --git -alFh'
-alias l='exa -F'
+alias ls='eza -F'
+alias ll='eza --git -alFh'
+alias l='eza -F'
 alias cat='bat --plain'
 alias g='git'
 

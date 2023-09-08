@@ -34,7 +34,7 @@ if has_arg "shell"; then
         starship \
         ripgrep \
         fd \
-        exa \
+        eza \
         fzf
 
     if $MAC; then
