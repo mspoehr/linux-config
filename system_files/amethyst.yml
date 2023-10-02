@@ -4,14 +4,14 @@ layouts:
   - fullscreen
   # - tall-right
   - wide
-  # - two-pane
+  - two-pane
   # - 3column-left
   # - middle-wide
   # - 3column-right
   # - 4column-left
   # - 4column-right
   - column
-  # - row
+  - row
   # - floating
   # - widescreen-tall
   # - widescreen-tall-right
@@ -27,6 +27,14 @@ mod2:
   - shift
   - control
   - command
+
+select-row-layout:
+  mod: mod1
+  key: g
+
+select-two-pane-layout:
+  mod: mod1
+  key: "2"
 
 floating:
   - com.1password.1password
