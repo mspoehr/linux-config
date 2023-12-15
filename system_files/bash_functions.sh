@@ -63,7 +63,7 @@ retry() {
 }
 
 function awsprofile() {
-    if aws configure list-profiles | grep -qw "$1"; then
+    if aws configure list-profiles 2>/dev/null | grep -qw "$1"; then
         export AWS_PROFILE="$1"
         unset AWS_ACCESS_KEY_ID
         unset AWS_SECRET_ACCESS_KEY
