@@ -74,6 +74,29 @@ function awsprofile() {
     fi
 }
 
+function aws_assume_role() {
+    # See https://stackoverflow.com/questions/63241009/aws-sts-assume-role-in-one-command
+    # shellcheck disable=SC2046,SC2183,SC2068
+    export $(printf "AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_SESSION_TOKEN=%s" \
+        $(aws sts assume-role $@ \
+        --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
+        --output text))
+    unset AWS_PROFILE
+}
+
+function set_aws_creds() {
+    credential_json="$*"
+
+    AWS_ACCESS_KEY_ID="$(echo "$credential_json" | jq -r '.Credentials.AccessKeyId')"
+    AWS_SECRET_ACCESS_KEY="$(echo "$credential_json" | jq -r '.Credentials.SecretAccessKey')"
+    AWS_SESSION_TOKEN="$(echo "$credential_json" | jq -r '.Credentials.SessionToken')"
+
+    export AWS_ACCESS_KEY_ID
+    export AWS_SECRET_ACCESS_KEY
+    export AWS_SESSION_TOKEN
+    unset AWS_PROFILE
+}
+
 function git-exclude-local() {
     grep "$1" .git/info/exclude || echo "$1" >> .git/info/exclude
 }
