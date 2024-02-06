@@ -97,6 +97,10 @@ function set_aws_creds() {
     unset AWS_PROFILE
 }
 
+function pick_aws_config() {
+    grep '\[profile ' ~/.aws/config | sed -nr 's/\[profile ([a-z0-9_-]+)\]/\1/p' | fzf --height 20%
+}
+
 function git-exclude-local() {
     grep "$1" .git/info/exclude || echo "$1" >> .git/info/exclude
 }

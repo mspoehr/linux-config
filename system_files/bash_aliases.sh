@@ -10,5 +10,6 @@ alias ll='eza --git -alFh'
 alias l='eza -F'
 alias cat='bat --plain'
 alias g='git'
+alias awsp='awsprofile $(pick_aws_config)'
 
 which fdfind &>/dev/null && alias fd='fdfind'
