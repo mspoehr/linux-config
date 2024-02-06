@@ -6,7 +6,7 @@ if $MAC; then
 fi
 
 alias ls='eza -F'
-alias ll='eza --git -alFh'
+alias ll='eza --git -alhF'
 alias l='eza -F'
 alias cat='bat --plain'
 alias g='git'
