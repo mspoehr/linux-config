@@ -104,3 +104,7 @@ function pick_aws_config() {
 function git-exclude-local() {
     grep "$1" .git/info/exclude || echo "$1" >> .git/info/exclude
 }
+
+function awsconsole() {
+    isengard open $(aws sts get-caller-identity --query "Account" --output text)
+}
