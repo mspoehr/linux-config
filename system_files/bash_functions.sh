@@ -108,3 +108,7 @@ function git-exclude-local() {
 function awsconsole() {
     isengard open $(aws sts get-caller-identity --query "Account" --output text)
 }
+
+function do_on_all() {
+    fd . --max-depth 1 --exec bash -c "cd '{}' && $*"
+}
