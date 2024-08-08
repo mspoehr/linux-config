@@ -7,6 +7,16 @@ sync. It is mostly macOS-oriented, but should also work in Linux.
 
 Originally forked from https://github.com/kkredit/linux-config. Go check out Kevin's set up, it's probably better than mine!
 
+## Git names
+
+If you do decide to adopt some (or all) of the configuration in this repo as your own (please do),
+make sure to update the git name config which is hardcoded as my name in `system_files/gitconfig`
+line 2 before running `./file-install.sh`. Unless your name is also actually `Michael Spoehr`, in
+which case, disregard this warning. :smile:
+
+Running `./file-install.sh` (see below) for the first time will prompt for the email you'd like to
+use for git commits. This is saved in ~/.gitemail and reused on subsequent reruns of the script.
+
 ## Usage
 
 To install config files to appropriate locations on the filesystem, run
