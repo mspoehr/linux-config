@@ -45,7 +45,6 @@ if has_arg "shell"; then
             gnupg \
             grep
 
-        brew tap homebrew/cask-fonts
         brew install --cask font-fira-code-nerd-font
 
         curl -L https://iterm2.com/shell_integration/bash -o ~/.iterm2_shell_integration.bash
@@ -64,8 +63,7 @@ if has_arg "macos-gui"; then
         itsycal \
         raycast \
         scroll-reverser \
-        visual-studio-code \
-        zsa-wally
+        visual-studio-code
 fi
 
 if has_arg "dev"; then
