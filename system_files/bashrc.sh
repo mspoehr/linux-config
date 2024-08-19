@@ -42,6 +42,20 @@ export WSL
 MAC=$(if uname -a | grep -iq darwin; then echo 'true'; else echo 'false'; fi)
 export MAC
 
+if $MAC && ! which brew &>/dev/null; then
+    # Homebrew is not on the PATH, which means our scripts will fail.
+
+    if [[ -f /opt/homebrew/bin/brew ]]; then
+        # Homebrew is not on the path by default on Apple Silicon, but it appears
+        # to be installed in /opt/homebrew. We can automatically fix this.
+        eval $(/opt/homebrew/bin/brew shellenv)
+    else
+        # Likely an intel mac and homebrew isn't installed (defaults to /usr/local/bin)
+        echo "User scripts cannot run because brew is not on the path. Is it installed?"
+        exit 1
+    fi
+fi
+
 # Source other files
 function sourceIfPresent() {
     [ -f $1 ] && source $1
