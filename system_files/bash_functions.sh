@@ -98,7 +98,7 @@ function set_aws_creds() {
 }
 
 function pick_aws_config() {
-    grep '\[profile ' ~/.aws/config | sed -nr 's/\[profile ([a-z0-9_-]+)\]/\1/p' | fzf --height 20%
+    grep '^\[profile ' ~/.aws/config | sed -nr 's/\[profile ([a-z0-9_-]+)\]/\1/p' | fzf --height 20%
 }
 
 function git-exclude-local() {
