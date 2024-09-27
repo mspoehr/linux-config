@@ -35,7 +35,8 @@ if has_arg "shell"; then
         ripgrep \
         fd \
         eza \
-        fzf
+        fzf \
+        jq
 
     if $MAC; then
         brew install \
@@ -55,11 +56,10 @@ if has_arg "shell"; then
     fi
 fi
 
-if has_arg "macos-gui"; then
+if has_arg "gui-common"; then
     brew tap homebrew/cask-drivers
     brew install --cask \
         amethyst \
-        brave-browser \
         iterm2 \
         itsycal \
         raycast \
@@ -67,15 +67,16 @@ if has_arg "macos-gui"; then
         visual-studio-code
 fi
 
-if has_arg "dev"; then
-    brew install \
-        shellcheck \
-        jq
+if has_arg "gui-work"; then
+    brew install --cask \
+        spotify \
+        gimp
+fi
 
-    if $MAC; then
-        brew install --cask \
-            visual-studio-code
-    fi
+if has_arg "gui-personal"; then
+    brew install --cask \
+        brave-browser \
+        obsidian
 fi
 
 if has_arg "webdev"; then
