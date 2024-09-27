@@ -111,6 +111,7 @@ if [ "$?" == 2 ]; then
 fi
 
 # ensure that SSH key is added to the agent
-if [[ -f ~/.ssh/id_rsa.pub && -f ~/.ssh/id_rsa ]]; then
-    ssh-add -L | grep -q "$(cat ~/.ssh/id_rsa.pub)" || ssh-add ~/.ssh/id_rsa
+key_file=$(fd -t f "id_(rsa|ecdsa)$" ~/.ssh)
+if [[ -n "$key_file" && -f $key_file.pub && -f $key_file ]]; then
+    ssh-add -L | grep -q "$(cat $key_file.pub)" || ssh-add $key_file
 fi
