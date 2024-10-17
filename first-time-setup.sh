@@ -102,3 +102,4 @@ trackpad > turn on tap to click
 ## finder
 
 settings > advanced > when performing a search > set to "search the current folder"
+set certain folders as favorites (e.g. home, Projects)
