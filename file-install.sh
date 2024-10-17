@@ -44,10 +44,13 @@ $cmd $FILES_DIR/badwolf.vim ~/.vim/colors/badwolf.vim
 $cmd $FILES_DIR/gitconfig ~/.gitconfig
 $cmd $FILES_DIR/gitignore_global ~/.gitignore_global
 $cmd $FILES_DIR/ripgreprc ~/.ripgreprc
-$cmd $FILES_DIR/com.googlecode.iterm2.plist ~/.config/com.googlecode.iterm2.plist
 mkdir -p ~/Library/KeyBindings
 $cmd $FILES_DIR/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
 $cmd $FILES_DIR/amethyst.yml ~/.amethyst.yml
+
+for file in $FILES_DIR/preferences/*; do
+    $cmd "$file" ~/Library/Preferences/$(basename "$file")
+done
 
 # Configure git email, as this may vary per system:
 if [ -s ~/.gitemail ]; then
