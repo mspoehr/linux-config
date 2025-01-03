@@ -29,3 +29,4 @@
                     fi; \
                     git push --set-upstream $REMOTE $(git rev-parse --abbrev-ref HEAD); \
                 }; f"
+    fpushnow = !git add . && git amend && git push --force-with-lease
