@@ -1,14 +1,33 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC1091
+source helper_scripts/local-helpers.sh
+
+if $(which apt &>/dev/null) && has_arg "shell"; then
+    sudo add-apt-repository -y ppa:aos1/diff-so-fancy
+    sudo apt install -y curl gpg fd-find diff-so-fancy fzf ripgrep bat jq autojump
+    curl -sS https://starship.rs/install.sh | sh
+
+    sudo mkdir -p /etc/apt/keyrings
+    wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+    echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] https://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+    sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+    sudo apt update
+    sudo apt install -y eza
+
+    if $WSL; then
+        sudo apt install keychain
+    fi
+
+    exit 0
+fi
+
 if ! $MAC; then
-    echo "program-install.sh is not currently supported on Linux. Feel free to open a PR!"
+    echo "program-install.sh is not currently supported on your OS/distribution. Feel free to open a PR!"
     exit 1
 fi
 
 cd "$(dirname "$0")" || exit
-
-# shellcheck disable=SC1091
-source helper_scripts/local-helpers.sh
 
 if ! $MAC; then
     UBU_REL=$(lsb_release -cs)
