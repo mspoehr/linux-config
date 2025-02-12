@@ -19,6 +19,11 @@ if is_installed batcat; then
   alias cat="batcat --plain"
 fi
 
+if is_installed xclip; then
+  alias pbcopy="xclip -selection clipboard"
+  alias pbpaste="xclip -selection clipboard -o"
+fi
+
 alias t="terraform"
 alias g='git'
 alias gpushnow="git commit --amend --no-edit -a && git push --force-with-lease"
