@@ -5,13 +5,23 @@ if $MAC; then
   alias zcat='gzcat'
 fi
 
-alias ls='eza -F'
-alias ll='eza --git -alhF'
-alias l='eza -F'
-alias cat='bat --plain'
+if is_installed eza; then
+  alias ls='eza -F'
+  alias ll='eza --git -alhF'
+  alias l='eza -F'
+fi
+
+if is_installed bat; then
+  alias cat='bat --plain'
+fi
+
+if is_installed batcat; then 
+  alias cat="batcat --plain"
+fi
+
 alias t="terraform"
 alias g='git'
 alias gpushnow="git commit --amend --no-edit -a && git push --force-with-lease"
 alias awsp='awsprofile $(pick_aws_config)'
 
-which fdfind &>/dev/null && alias fd='fdfind'
+is_installed fdfind && alias fd='fdfind'
