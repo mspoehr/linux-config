@@ -56,38 +56,37 @@ if $MAC && ! which brew &>/dev/null; then
     fi
 fi
 
-# Source other files
-function sourceIfPresent() {
-    [ -f $1 ] && source $1
-}
-
-sourceIfPresent ~/.bash_aliases
-sourceIfPresent ~/.bash_functions
-sourceIfPresent ~/.bash_variables
-sourceIfPresent ~/.fzf.bash
-
-if $MAC; then
-    sourceIfPresent ~/.brew_profile
-    sourceIfPresent $(brew --prefix)/etc/bash_completion
-    sourceIfPresent $(brew --prefix)/etc/profile.d/autojump.sh
-    sourceIfPresent ~/.iterm2_shell_integration.bash
-else
-    sourceIfPresent /etc/profile.d/bash_completion.sh
-    sourceIfPresent /usr/share/bash-completion/completions/git
-    sourceIfPresent /usr/share/autojump/autojump.sh
-fi
-
-# Load starship after sourcing files above, otherwise there'll be issues with cmd_duration
-sourceIfPresent ~/.bash_prompt
-
-function ifInstalled() {
+function is_installed() {
     which "$1" &>/dev/null
 }
 
+function source_if_present() {
+    [ -f $1 ] && source $1
+}
+
+source_if_present ~/.bash_aliases
+source_if_present ~/.bash_functions
+source_if_present ~/.bash_variables
+source_if_present ~/.fzf.bash
+
+if $MAC; then
+    source_if_present ~/.brew_profile
+    source_if_present $(brew --prefix)/etc/bash_completion
+    source_if_present $(brew --prefix)/etc/profile.d/autojump.sh
+    source_if_present ~/.iterm2_shell_integration.bash
+else
+    source_if_present /etc/profile.d/bash_completion.sh
+    source_if_present /usr/share/bash-completion/completions/git
+    source_if_present /usr/share/autojump/autojump.sh
+fi
+
+# Load starship after sourcing files above, otherwise there'll be issues with cmd_duration
+source_if_present ~/.bash_prompt
+
 # Setup autocompletion
 __git_complete g git
-ifInstalled aws && complete -C '/usr/local/bin/aws_completer' aws
-ifInstalled terraform && complete -C '/usr/local/bin/terraform' terraform
+is_installed aws && complete -C '/usr/local/bin/aws_completer' aws
+is_installed terraform && complete -C '/usr/local/bin/terraform' terraform
 
 # Set environment variables
 PATH=$PATH:~/bin
@@ -101,7 +100,7 @@ if $MAC; then
 fi
 
 # use bat to page man files, if it is installed:
-ifInstalled bat && export MANPAGER="sh -c 'col -bx | bat -l man -p'" || true
+is_installed bat && export MANPAGER="sh -c 'col -bx | bat -l man -p'" || true
 
 # Ensure that the SSH agent is running
 ssh-add -L &>/dev/null
