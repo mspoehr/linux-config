@@ -103,14 +103,18 @@ fi
 is_installed bat && export MANPAGER="sh -c 'col -bx | bat -l man -p'" || true
 
 # Ensure that the SSH agent is running
-ssh-add -L &>/dev/null
-if [ "$?" == 2 ]; then
-    # Could not open a connection to your authentication agent.
-    eval $(ssh-agent -s)
-fi
+if is_installed keychain; then
+    eval "$(keychain --eval --quiet id_rsa)"
+else
+    ssh-add -L &>/dev/null
+    if [ "$?" == 2 ]; then
+        # Could not open a connection to your authentication agent.
+        eval $(ssh-agent -s)
+    fi
 
-# ensure that SSH key is added to the agent
-key_file=$(fd -t f "id_(rsa|ecdsa)$" ~/.ssh)
-if [[ -n "$key_file" && -f $key_file.pub && -f $key_file ]]; then
-    ssh-add -L | grep -q "$(cat $key_file.pub)" || ssh-add $key_file
+    # ensure that SSH key is added to the agent
+    key_file=$(fd -t f "id_(rsa|ecdsa)$" ~/.ssh)
+    if [[ -n "$key_file" && -f $key_file.pub && -f $key_file ]]; then
+        ssh-add -L | grep -q "$(cat $key_file.pub)" || ssh-add $key_file
+    fi
 fi
