@@ -104,7 +104,7 @@ is_installed bat && export MANPAGER="sh -c 'col -bx | bat -l man -p'" || true
 
 # Ensure that the SSH agent is running
 if is_installed keychain; then
-    eval "$(keychain --eval --quiet id_rsa)"
+    eval "$(keychain --eval --quiet --ignore-missing id_rsa)"
 else
     ssh-add -L &>/dev/null
     if [ "$?" == 2 ]; then
