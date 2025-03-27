@@ -28,5 +28,6 @@ alias t="terraform"
 alias g='git'
 alias gpushnow="git commit --amend --no-edit -a && git push --force-with-lease"
 alias awsp='awsprofile $(pick_aws_config)'
+alias dockerrunhere="docker run --rm -it -v \$PWD:\$PWD -w \$PWD"
 
 is_installed fdfind && alias fd='fdfind'
