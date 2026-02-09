@@ -35,5 +35,16 @@
                     fi; \
                     git push --set-upstream $REMOTE $(git rev-parse --abbrev-ref HEAD); \
                 }; f"
+    glmr = "!f() { \
+                 REMOTE=origin; \
+                 if [ $# -eq 1 ]; then \
+                    REMOTE=$1; \
+                 fi; \
+                 git push --set-upstream \
+                     -o merge_request.create \
+                     -o merge_request.remove_source_branch \
+                     -o merge_request.assign=me \
+                     $REMOTE $(git rev-parse --abbrev-ref HEAD); \
+             }; f"
     fpushnow = !git add . && git amend && git push --force-with-lease
     logadog = log --all --decorate --oneline --graph
