@@ -22,6 +22,7 @@
     unstage = restore --staged
     fpush = push --force-with-lease
     rpull = pull --rebase
+    ca = commit -a
     acp = "!f() { \
                 git add .; \
                 git commit -m \"$1\"; \
