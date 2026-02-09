@@ -22,6 +22,11 @@
     unstage = restore --staged
     fpush = push --force-with-lease
     rpull = pull --rebase
+    acp = "!f() { \
+                git add .; \
+                git commit -m \"$1\"; \
+                git push; \
+            }; f"
     newpush = "!f() { \
                     REMOTE=origin; \
                     if [ $# -eq 1 ]; then \
