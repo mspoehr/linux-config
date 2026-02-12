@@ -99,6 +99,15 @@ if $MAC; then
    export BASH_SILENCE_DEPRECATION_WARNING=1
 fi
 
+if $WSL; then
+    [ ! -f ~/.windows_host_username ] && /mnt/c/Windows/System32/cmd.exe /c "echo %USERNAME%" 2>/dev/null
+
+    WINDOWS_USER="$(cat ~/.windows_host_username)"
+    export WIN_HOME="/mnt/c/Users/$WINDOWS_USER"
+    export WIN_DOCS="/mnt/c/Users/$WINDOWS_USER/Documents"
+    export WIN_DOWNLOADS="/mnt/c/Users/$WINDOWS_USER/Downloads"
+fi
+
 # use bat to page man files, if it is installed:
 is_installed bat && export MANPAGER="sh -c 'col -bx | bat -l man -p'" || true
 
