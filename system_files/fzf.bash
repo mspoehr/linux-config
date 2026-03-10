@@ -12,7 +12,7 @@ fi
 
 # Auto-completion
 # ---------------
-[[ $- == *i* ]] && source "$fzf_scripts_location/completion.bash" 2> /dev/null
+[[ $- == *i* ]] && source "$fzf_scripts_location/completion.bash" 2>/dev/null
 _fzf_setup_completion path nano
 _fzf_setup_completion path vim
 # Note: host completion option not supported in lower version of fzf in linux package managers

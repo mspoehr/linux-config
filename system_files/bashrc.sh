@@ -100,7 +100,7 @@ if $MAC; then
 fi
 
 if $WSL; then
-    [ ! -f ~/.windows_host_username ] && /mnt/c/Windows/System32/cmd.exe /c "echo %USERNAME%" 2>/dev/null
+    [ ! -f ~/.windows_host_username 2>/dev/null ] && /mnt/c/Windows/System32/cmd.exe /c "echo %USERNAME%" 2>/dev/null > ~/.windows_host_username
 
     WINDOWS_USER="$(cat ~/.windows_host_username)"
     export WIN_HOME="/mnt/c/Users/$WINDOWS_USER"
